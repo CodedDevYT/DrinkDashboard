@@ -37,6 +37,12 @@
     gap: 10px;
   }
 
+  .items {
+    width: 70%;
+    text-align: center;
+    padding: auto;
+    margin: auto;
+  }
   
   .drink-option {
     display: flex;
