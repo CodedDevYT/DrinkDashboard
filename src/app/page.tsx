@@ -94,7 +94,8 @@ export default function Home() {
       <div className="total-price">
         Total Price: <span id="totalPrice">{count}€</span>
       </div>
-      <button className="select-button" onClick={() => setCount(0)}>Reset</button>
+      <button className="select-button" onClick={() => {setCount(0)
+      setList("")}}>Reset</button>
     </div>
   )
 }
