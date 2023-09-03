@@ -1,101 +1,110 @@
 'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import { useState } from 'react';
+import {useMemo, useState} from 'react';
+
+interface Drink {
+    name: string,
+    price: number
+}
 
 export default function Home() {
 
-  const [count, setCount] = useState(0)
-  const [list, setList] = useState("")
+    const [list, setList] = useState([] as Drink[])
 
-  return (
+    const price = useMemo(() => {
+        let totalPrice = 0
+        list.forEach((item) => {
+            totalPrice += item.price
+        })
+        return totalPrice
+    }, [list])
 
-    <div className="container">
-      <h1>Drink Dashboard</h1>
+    function getAmountOfDrink(name: string): number {
+        let amount = 0
+        list.forEach((item) => {
+            if (item.name === name) {
+                amount++
+            }
+        })
+        return amount
+    }
 
-      <div className="option-1">
-        <div className="drink-option">
-          <span className="drink-name">Flasche Wein 1L</span>
-          <span className="drink-price">13€</span>
-          <button className="select-button" onClick={() => {
-            setCount(count + 13)
-            setList(list + "Flasche Wein 1L & ")
-            }}>Add</button>
+    function formatPriceToEuro(price: number): string {
+        return price.toFixed(2).replace('.', ',')
+    }
+
+    const drinks: Drink[] = [
+        {
+            name: "Flasche Wein 1L",
+            price: 13,
+        },
+        {
+            name: "Wein 1/4 L",
+            price: 3.50
+        },
+        {
+            name: "Schorle 1/4 L",
+            price: 3.00
+        },
+        {
+            name: "Cola / Frucade 0,33 L",
+            price: 2.50
+        },
+        {
+            name: "Spezi 0.5L",
+            price: 3.00
+        },
+        {
+            name: "Apfelsaft Schorle 0.5L",
+            price: 3.00
+        },
+        {
+            name: "Sprudel 0.5L süß / sauer",
+            price: 2.50
+        },
+        {
+            name: "Pfand",
+            price: 2.00
+        }
+    ]
+
+    return (
+
+        <div className={styles.container}>
+            <h1 className={styles.title}>Drink Dashboard</h1>
+
+            <div className={styles.itemContainer}>
+                {drinks.map((drink, index) => (
+                    <div className={styles.drink} key={index} onClick={() => {
+                        setList([...list, drink])
+                    }}>
+                        <span className={styles.drinkName}>{drink.name}</span>
+                        <span className={styles.drinkAmount}>{getAmountOfDrink(drink.name)}x</span>
+                        <span className={styles.drinkPrice}>{drink.price}€</span>
+
+                    </div>
+                ))}
+            </div>
+
+            <div className={styles.selectedDrinks}>
+                {list.map((drink, index) => (
+                    <div className={styles.selectedDrink} key={index} onClick={() => {
+                        setList(list.filter((item) => item.name !== drink.name))
+                    }}>
+                        <span className={styles.name}>{drink.name}</span>
+                        <span className={styles.price}>{drink.price}€</span>
+                    </div>
+                ))}
+            </div>
+
+            <div className={styles.totalPrice}>
+                Total Price: <span id="totalPrice">{formatPriceToEuro(price)}€</span>
+            </div>
+            <button className={styles.resetButton} onClick={() => {
+                setList([])
+            }}>Reset
+            </button>
         </div>
-        <div className="drink-option">
-          <span className="drink-name">Wein 1/4 L</span>
-          <span className="drink-price">3.50€</span>
-          <button className="select-button" onClick={() => {
-            setCount(count + 3.50)
-            setList(list + "Wein 1/4 L & ")
-            }}>Add</button>
-        </div>
-        <div className="drink-option">
-          <span className="drink-name">Schorle 1/4 L</span>
-          <span className="drink-price">3.00€</span>
-          <button className="select-button" onClick={() => {
-            setCount(count + 3.00)
-            setList(list + "Schorle 1/4 L & ")
-          }
-          }>Add</button>
-        </div>
-        <div className="drink-option">
-          <span className="drink-name">Cola / Frucade 0,33 L</span>
-          <span className="drink-price">2.50€</span>
-          <button className="select-button" onClick={() => {
-            
-            setCount(count + 2.50)
-            setList(list + "Cola / Frucade 0,33 L & ")
-          
-          }}>Add</button>
-        </div>
-        <div className="drink-option">
-          <span className="drink-name">Spezi 0.5L</span>
-          <span className="drink-price">3.00€</span>
-          <button className="select-button" onClick={() => {
-            setCount(count + 3.00)
-            setList(list + "Spezi 0.5L & ")
-
-          }}>Add</button>
-        </div>
-      </div>
-
-      <div className="option-2">
-
-        <div className="drink-option">
-          <span className="drink-name">Apfelsaft Schorle 0.5L</span>
-          <span className="drink-price">3.00€</span>
-          <button className="select-button" onClick={() => { setCount(count + 3.00)
-          
-          setList(list + "Apfelsaft Schorle 0.5L & ")
-          
-          }}>Add</button>
-        </div>
-        <div className="drink-option">
-          <span className="drink-name">Sprudel 0.5L süß / sauer</span>
-          <span className="drink-price">2.50€</span>
-          <button className="select-button" onClick={() => {
-            setCount(count + 2.50)
-            setList(list + "Sprudel 0.5L süß / sauer & ")
-          }}>Add</button>
-        </div>
-        <div className="drink-option">
-          <span className="drink-name">Pfand</span>
-          <span className="drink-price">2.00€</span>
-          <button className="select-button" onClick={() => { 
-            setList(list + "Pfand & ")
-            setCount(count + 2.00)}}>Add</button>
-        </div>
-
-      </div>
-
-      <p className='items'>{list}</p>
-
-      <div className="total-price">
-        Total Price: <span id="totalPrice">{count}€</span>
-      </div>
-      <button className="select-button" onClick={() => {setCount(0)
-      setList("")}}>Reset</button>
-    </div>
-  )
+    )
 }
