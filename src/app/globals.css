@@ -1,69 +1,61 @@
 /* styles.module.css */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 1rem;
+}
+
+.itemContainer {
+    width: 100%;
+
     background-color: #f7f7f7;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
-  }
-  
-  .title {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 0.5rem;
+    margin: 20px 0;
+}
+
+.title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #333;
-  }
-  
-  .option-1{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
-  
-  .option-2{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
+}
 
-  .drink-option {
-
-    min-width: 200px;
+.drink {
+    cursor: pointer;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .items {
-    width: 70%;
-    text-align: center;
-    padding: auto;
-    margin: auto;
-  }
-  
-  .drink-option {
-    display: flex;
+    gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 20px 1rem;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-  }
-  
-  .drink-name {
+}
+
+.drink:active {
+    background-color: #eee;
+}
+
+.drink-name {
     font-weight: bold;
-  }
-  
-  .drink-price {
+}
+
+.drink-price {
     color: #666;
-  }
-  
-  .select-button {
+}
+
+.select-button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -73,16 +65,16 @@
     width: 200px;
     height: 30px;
     margin: 10px;
-  }
-  
-  .select-button:hover {
+}
+
+.select-button:hover {
     background-color: #0056b3;
-  }
-  
-  .total-price {
+}
+
+.total-price {
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
     color: #333;
-  }
+}
   
